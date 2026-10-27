@@ -1,0 +1,285 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "PulseBoard Sandbox API",
+    "version": "1.0.0",
+    "description": "Subconjunto del Sandbox del curso (FastAPI) que usa PulseBoard: tableros y tareas. Toda ruta bajo /api/v1 exige Authorization: Bearer <ID token de Firebase>."
+  },
+  "servers": [
+    {
+      "url": "/",
+      "description": "Mismo origen (modos demo y mixto, simulado con MSW) o VITE_SANDBOX_URL (modo completo)"
+    }
+  ],
+  "security": [{ "firebaseIdToken": [] }],
+  "paths": {
+    "/api/v1/boards": {
+      "get": {
+        "operationId": "listBoards",
+        "summary": "Lista los tableros visibles para la persona autenticada",
+        "responses": {
+          "200": {
+            "description": "Tableros ordenados por nombre",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Board" }
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      }
+    },
+    "/api/v1/boards/{boardId}/tasks": {
+      "parameters": [{ "$ref": "#/components/parameters/BoardId" }],
+      "get": {
+        "operationId": "listTasks",
+        "summary": "Lista las tareas de un tablero, de la más reciente a la más antigua",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "description": "Filtra por estado. Si se omite, devuelve todos los estados.",
+            "schema": { "$ref": "#/components/schemas/TaskStatus" }
+          },
+          {
+            "name": "assignee",
+            "in": "query",
+            "required": false,
+            "description": "Filtra por el correo de la persona asignada.",
+            "schema": { "type": "string", "format": "email", "maxLength": 254 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Página única de tareas con el total que cumple los filtros",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/TaskPage" }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "422": { "$ref": "#/components/responses/ValidationFailed" }
+        }
+      },
+      "post": {
+        "operationId": "createTask",
+        "summary": "Crea una tarea en estado todo",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/TaskCreate" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Tarea creada",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Task" }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "422": { "$ref": "#/components/responses/ValidationFailed" }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "operationId": "health",
+        "summary": "Estado del servicio",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "El servicio responde",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status"],
+                  "properties": {
+                    "status": { "type": "string", "const": "ok" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "firebaseIdToken": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "ID token que entrega Firebase Auth con getIdToken()."
+      }
+    },
+    "parameters": {
+      "BoardId": {
+        "name": "boardId",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "string", "pattern": "^[a-z0-9-]{1,40}$" }
+      }
+    },
+    "responses": {
+      "Unauthorized": {
+        "description": "Falta el token o no es válido",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "El tablero no existe",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+          }
+        }
+      },
+      "ValidationFailed": {
+        "description": "El cuerpo o los parámetros no cumplen el contrato",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "Board": {
+        "type": "object",
+        "required": ["id", "name"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" }
+        }
+      },
+      "TaskStatus": {
+        "type": "string",
+        "enum": ["todo", "doing", "done"]
+      },
+      "TaskPriority": {
+        "type": "string",
+        "enum": ["low", "medium", "high"]
+      },
+      "Task": {
+        "type": "object",
+        "required": [
+          "id",
+          "boardId",
+          "title",
+          "status",
+          "priority",
+          "assignee",
+          "createdBy",
+          "createdAt"
+        ],
+        "properties": {
+          "id": { "type": "string" },
+          "boardId": { "type": "string" },
+          "title": { "type": "string", "minLength": 3, "maxLength": 120 },
+          "status": { "$ref": "#/components/schemas/TaskStatus" },
+          "priority": { "$ref": "#/components/schemas/TaskPriority" },
+          "assignee": {
+            "description": "Correo de la persona asignada o null",
+            "oneOf": [
+              { "type": "string", "format": "email" },
+              { "type": "null" }
+            ]
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "uid de quien creó la tarea"
+          },
+          "createdAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "TaskPage": {
+        "type": "object",
+        "required": ["items", "total"],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Task" }
+          },
+          "total": { "type": "integer", "minimum": 0 }
+        }
+      },
+      "TaskCreate": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["title"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Se recortan los espacios; de 3 a 120 caracteres",
+            "minLength": 3,
+            "maxLength": 120
+          },
+          "priority": {
+            "$ref": "#/components/schemas/TaskPriority",
+            "default": "medium"
+          },
+          "assignee": {
+            "oneOf": [
+              { "type": "string", "format": "email" },
+              { "type": "null" }
+            ],
+            "default": null
+          }
+        }
+      },
+      "ValidationIssue": {
+        "type": "object",
+        "required": ["loc", "msg", "type"],
+        "properties": {
+          "loc": {
+            "type": "array",
+            "items": { "oneOf": [{ "type": "string" }, { "type": "integer" }] }
+          },
+          "msg": { "type": "string" },
+          "type": { "type": "string" }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "required": ["error_code", "message"],
+        "properties": {
+          "error_code": {
+            "type": "string",
+            "enum": [
+              "UNAUTHORIZED",
+              "BOARD_NOT_FOUND",
+              "VALIDATION_ERROR",
+              "INTERNAL_ERROR"
+            ]
+          },
+          "message": {
+            "type": "string",
+            "description": "Mensaje en español para mostrar"
+          },
+          "detail": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/ValidationIssue" }
+          }
+        }
+      }
+    }
+  }
+}

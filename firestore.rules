@@ -1,0 +1,24 @@
+rules_version = '2';
+
+// Reglas de Firestore para los comentarios de PulseBoard. Se despliegan con
+// la consola o con la CLI de Firebase; el modo demo y los tests no las usan.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /boards/{boardId}/tasks/{taskId}/comments/{commentId} {
+      // Solo personas autenticadas leen comentarios.
+      allow read: if request.auth != null;
+
+      // Cada quien publica a su nombre, con texto de 1 a 500 caracteres y la
+      // hora del servidor. Nadie edita ni borra comentarios ajenos.
+      allow create: if request.auth != null
+        && request.resource.data.keys().hasOnly(
+          ['authorId', 'authorName', 'text', 'createdAt'])
+        && request.resource.data.authorId == request.auth.uid
+        && request.resource.data.text is string
+        && request.resource.data.text.size() > 0
+        && request.resource.data.text.size() <= 500
+        && request.resource.data.createdAt == request.time;
+      allow update, delete: if false;
+    }
+  }
+}

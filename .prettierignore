@@ -1,0 +1,9 @@
+node_modules
+dist
+coverage
+.vite
+package-lock.json
+public/mockServiceWorker.js
+
+# Documentos que escribe el alumno: su formato no cuenta para la nota.
+*.md
