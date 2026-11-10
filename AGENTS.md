@@ -6,12 +6,12 @@ Este archivo le da contexto permanente a cualquier asistente de código que trab
 
 - Node 24 (`.nvmrc`) y npm. Instala con `npm ci`; no cambies versiones ni agregues dependencias sin que la persona lo pida.
 - Comandos: `npm run dev`, `npm test`, `npm run typecheck`, `npm run lint`, `npm run format`, `npm run verify`.
-- `src/api/schema.ts` se genera con `npm run gen:api` desde `openapi.json`. Nunca se edita a mano ni se escriben tipos de la API "a ojo".
+- `src/api/schema.ts` se genera con `npm run gen:api` desde `openapi.json`. Nunca se edita a mano ni se escriben tipos del API "a ojo".
 
 ## 2. Capas y fronteras
 
 - Los componentes y hooks no importan `firebase/*` ni llaman a `fetch`: todo pasa por `useServices()` (`auth`, `comments`, `api`). El SDK de Firebase solo aparece en `src/firebase/`.
-- `src/main.tsx` es la única raíz de composición: según `readConfig` (`src/config.ts`) arranca en modo demo, mixto (Firebase real con la API REST simulada por MSW) o completo.
+- `src/main.tsx` es la única raíz de composición: según `readConfig` (`src/config.ts`) arranca en modo demo, mixto (Firebase real con el API REST simulado por MSW) o completo.
 - `mocks/` y `tests/` (fuera de `tests/student/`) son oficiales: no se modifican.
 
 ## 3. Estado de servidor con TanStack Query

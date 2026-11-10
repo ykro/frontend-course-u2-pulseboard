@@ -1,6 +1,6 @@
 # PulseBoard — Proyecto base del alumno (Curso 2, Unidad 2)
 
-PulseBoard es el tablero de tareas de un equipo. Las tareas viven en la API "Sandbox" del curso (FastAPI, descrita en `openapi.json`) y los comentarios de cada tarea viven en Firestore, en vivo. La sesión la maneja Firebase Auth. El acceso, el encabezado y la navegación entre tableros ya funcionan. Tu trabajo tiene dos partes: el **taller guiado** y el **reto autónomo**.
+PulseBoard es el tablero de tareas de un equipo. Las tareas viven en el API "Sandbox" del curso (FastAPI, descrito en `openapi.json`) y los comentarios de cada tarea viven en Firestore, en vivo. La sesión la maneja Firebase Auth. El acceso, el encabezado y la navegación entre tableros ya funcionan. Tu trabajo tiene dos partes: el **taller guiado** y el **reto autónomo**.
 
 ## Primeros pasos
 
@@ -64,7 +64,7 @@ Al empezar, `npm test` muestra **5 tests en verde**: los únicos que prueban có
 | "con Firebase y sin VITE_SANDBOX_URL usa el modo mixto; con ella, el completo" | `tests/config.test.ts` |
 | "en el modo mixto el Sandbox simulado acepta el ID token de Firebase" | `tests/config.test.ts` |
 
-Los archivos oficiales (`tests/` fuera de `tests/student/`, `mocks/`, la configuración y `.github/workflows/ci.yml`) no se modifican. El calificador usa siempre su propia copia y reporta cualquier cambio como sospecha de integridad.
+Los archivos oficiales (`tests/` fuera de `tests/student/`, `mocks/`, la configuración y `.github/workflows/ci.yml`) no se modifican. Cambiarlos cuenta como sospecha de integridad en la rúbrica.
 
 ## Parte 1. Taller guiado (60 minutos)
 
@@ -124,38 +124,21 @@ Tus tests propios suman si pasan contra la solución de referencia y detectan mu
 
 Responde `ARCHITECTURE_DECISIONS.md` (incluye ampliar `AGENTS.md` con una regla propia y la declaración de uso de IA) y marca con criterio `SECURITY_AND_QUALITY.md`.
 
-## Cómo se califica (100 puntos)
+## Rúbrica (100 puntos)
 
 | Componente | Puntos | Cómo se mide |
 | :--- | ---: | :--- |
 | Taller guiado | 20 | `tests/workshop.test.tsx`, proporcional |
 | Reto, tests públicos | 10 | `tests/challenge.test.tsx`, proporcional |
-| Reto, tests ocultos | 30 | tests ocultos, proporcional |
+| Reto, contrato completo | 30 | los casos del contrato que los tests públicos no cubren, con más bordes y datos distintos, proporcional |
 | Tests propios | 15 | pasan contra la referencia y detectan mutantes que la suite pública no detecta; los errores sembrados se agrupan por concepto: 2 conceptos distintos detectados = completo, 1 = mitad |
 | ADR y checklist | 15 | revisión manual con rúbrica: ADR 10, checklist `SECURITY_AND_QUALITY.md` 2, sección propia de `AGENTS.md` 2 y declaración de uso de IA 1 |
 | Calidad e integridad | 10 | `typecheck`, `lint` y `format:check` limpios (5) + sin sospechas de integridad (5) |
 | **Total** | **100** | |
 
-**La nota no sale de tu CI.** El workflow de GitHub Actions solo te da retroalimentación. El calificador del curso calcula la nota sobre una copia limpia del proyecto: toma tu `src/`, tus tests propios y tus documentos, y corre los tests oficiales más un conjunto de **tests ocultos** del reto con otros datos y más casos borde. Te lo decimos de frente para que no pierdas tiempo: memorizar las respuestas de `tests/challenge.test.tsx` o detectar si el código corre bajo Vitest no sirve, y además se reporta. Implementa el contrato completo y pruébalo con tus propios casos.
+**La CI no es todo el reto.** El workflow de GitHub Actions corre los tests oficiales y te da retroalimentación, pero los tests públicos del reto son una muestra: el contrato completo tiene más casos borde y otros datos. Memorizar las respuestas de `tests/challenge.test.tsx` o detectar si el código corre bajo Vitest no sirve. Implementa el contrato completo y pruébalo con tus propios casos.
 
 Se marca como sospecha de integridad: modificar tests oficiales, `mocks/`, la configuración o el workflow, y que `src/` o tus tests usen `eval`, `Function`, `import()` dinámico, módulos de Node como `fs` o `child_process`, o mencionen el runner de pruebas.
-
-<!-- texto-escaner:inicio (generado por scripts/texto_escaner.py; no editar a mano) -->
-
-### Qué marca el escáner del calificador
-
-El calificador revisa tu código y tus tests antes de correrlos. Si encuentra algo de esta lista, tu nota queda **retenida** hasta que el docente la revise: no pierdes puntos automáticamente, pero tampoco se publica. Nada de esto hace falta para resolver los retos.
-
-**Por qué existe.** Tus tests corren en la misma máquina que los tests ocultos. Lo que se marca es lo que permitiría leer esos tests, cambiar el resultado de las pruebas o salir a internet desde el calificador.
-
-**En este proyecto (TypeScript).**
-
-- Se marca: importar módulos de Node con acceso al sistema (`fs`, `child_process`, `os`, `net`, `http`, `vm`, `worker_threads`…; sí puedes `crypto`, `path`, `url`, `util`, `events`, `buffer`, `assert`, `timers`); `import()` o `require()` con un nombre calculado; `eval` y `Function()`; `process.argv`, `process.exit`, `process.binding`, `process.env[nombre calculado]`; `globalThis`, `window` o `process` indexados con un nombre calculado; `__proto__` y `constructor.constructor`; en `src/`, mencionar el runner (`vitest`, `junit`, `AWA_`, `afterAll(`), también armado por partes; en tests, `process.cwd`, `__dirname`, `import.meta.url`.
-- Sí puedes unir textos (`"btn " + "primary"`), usar rutas como `/sitemap.xml` y `window["dataLayer"]`.
-
-**En todos los proyectos** se marca además: modificar o borrar archivos oficiales, agregar archivos fuera de tus carpetas, enlaces simbólicos, y archivos como `sitecustomize.py`, `pytest.ini`, `init.gradle` o `.npmrc`. Y tus tests deben dar siempre el mismo resultado: un test que falla al azar no cuenta.
-
-<!-- texto-escaner:fin -->
 
 ## Uso de asistentes de IA
 
