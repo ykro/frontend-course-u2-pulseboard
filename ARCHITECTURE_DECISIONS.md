@@ -1,4 +1,4 @@
-# Decisiones de arquitectura — PulseBoard (Curso 2, Unidad 2)
+# Decisiones de arquitectura — PulseBoard (Unidad 2)
 
 Responde con tus palabras y con ejemplos de tu propio código. Respuestas genéricas que podrían aplicar a cualquier proyecto reciben poco puntaje. Extensión sugerida: de 3 a 8 líneas por pregunta.
 

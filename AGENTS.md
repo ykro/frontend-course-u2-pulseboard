@@ -1,4 +1,4 @@
-# AGENTS.md — Reglas para asistentes de IA en PulseBoard (Curso 2, Unidad 2)
+# AGENTS.md — Reglas para asistentes de IA en PulseBoard (Unidad 2)
 
 Este archivo le da contexto permanente a cualquier asistente de código que trabaje en el repositorio. Es una base: como parte de tu entrega debes ampliarlo con al menos una regla propia (ver `ARCHITECTURE_DECISIONS.md`, pregunta 5).
 

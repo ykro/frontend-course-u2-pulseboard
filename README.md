@@ -1,4 +1,4 @@
-# PulseBoard — Proyecto base del alumno (Curso 2, Unidad 2)
+# PulseBoard — Proyecto base del alumno (Unidad 2)
 
 PulseBoard es el tablero de tareas de un equipo. Las tareas viven en el API "Sandbox" del curso (FastAPI, descrito en `openapi.json`) y los comentarios de cada tarea viven en Firestore, en vivo. La sesión la maneja Firebase Auth. El acceso, el encabezado y la navegación entre tableros ya funcionan. Tu trabajo tiene dos partes: el **taller guiado** y el **reto autónomo**.
 

@@ -1,4 +1,4 @@
-# Checklist de seguridad y calidad — PulseBoard (Curso 2, Unidad 2)
+# Checklist de seguridad y calidad — PulseBoard (Unidad 2)
 
 Marca cada casilla solo si la verificaste en tu código y escribe la evidencia (archivo y función, comando o test). Una casilla marcada sin evidencia no cuenta. Vale 2 de los 15 puntos de la rúbrica manual.
 
