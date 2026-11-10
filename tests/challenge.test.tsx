@@ -1,4 +1,4 @@
-// Tests públicos del reto. Son una muestra: el contrato completo del README
+// Tests públicos del reto. Son una muestra: el contrato completo de la guía del reto
 // tiene otros datos y más casos borde. No los modifiques.
 import { screen, waitFor, within } from "@testing-library/react";
 import { delay, http } from "msw";

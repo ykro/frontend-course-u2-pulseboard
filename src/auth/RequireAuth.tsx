@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { useAuth } from "./authContext";
 
 /**
- * Reto. Guardia de ruta protegida. El contrato completo está en el README
+ * Reto. Guardia de ruta protegida. El contrato completo está en la guía del reto
  * de la raíz de tu repositorio.
  */
 export function RequireAuth({ children }: { children: ReactNode }) {

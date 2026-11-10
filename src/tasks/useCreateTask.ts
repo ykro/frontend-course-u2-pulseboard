@@ -10,7 +10,7 @@ export interface NewTaskInput {
 
 /**
  * Reto. Crea una tarea con actualización optimista. El contrato completo
- * está en el README de la raíz de tu repositorio.
+ * está en la guía del reto del curso.
  */
 export function useCreateTask(_boardId: string) {
   return useMutation<Task, ApiError, NewTaskInput>({
