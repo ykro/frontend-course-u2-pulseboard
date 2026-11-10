@@ -1,5 +1,5 @@
-// Tests públicos del reto. Son una muestra: la nota incluye tests ocultos
-// con otros datos y más casos borde. No los modifiques.
+// Tests públicos del reto. Son una muestra: el contrato completo del README
+// tiene otros datos y más casos borde. No los modifiques.
 import { screen, waitFor, within } from "@testing-library/react";
 import { delay, http } from "msw";
 import { describe, expect, it } from "vitest";

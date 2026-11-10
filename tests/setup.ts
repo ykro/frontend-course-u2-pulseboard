@@ -1,4 +1,4 @@
-// Setup oficial de Vitest. No lo modifiques: el calificador usa su copia.
+// Setup oficial de Vitest. No lo modifiques: es parte de la suite oficial.
 import "@testing-library/jest-dom/vitest";
 import { cleanup } from "@testing-library/react";
 import { setupServer } from "msw/node";
