@@ -1,8 +1,6 @@
 # Decisiones de arquitectura — PulseBoard (Unidad 2)
 
-Responde con tus palabras y con ejemplos de tu propio código. Respuestas genéricas que podrían aplicar a cualquier proyecto reciben poco puntaje. Extensión sugerida: de 3 a 8 líneas por pregunta.
-
-Puntaje (rúbrica manual de 15 puntos): preguntas 1 a 4, 10 puntos en total; pregunta 5 (tu sección de `AGENTS.md`), 2 puntos; pregunta 6 (declaración de uso de IA), 1 punto. El checklist `SECURITY_AND_QUALITY.md` vale los 2 puntos restantes.
+Responde con tus palabras y con ejemplos de tu propio código. Respuestas genéricas que podrían aplicar a cualquier proyecto no te sirven. Extensión sugerida: de 3 a 8 líneas por pregunta.
 
 ## 1. Dividir los datos entre REST y Firestore
 

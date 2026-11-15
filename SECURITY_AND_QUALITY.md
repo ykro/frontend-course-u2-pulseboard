@@ -1,6 +1,6 @@
 # Checklist de seguridad y calidad — PulseBoard (Unidad 2)
 
-Marca cada casilla solo si la verificaste en tu código y escribe la evidencia (archivo y función, comando o test). Una casilla marcada sin evidencia no cuenta. Vale 2 de los 15 puntos de la rúbrica manual.
+Marca cada casilla solo si la verificaste en tu código y escribe la evidencia (archivo y función, comando o test). Una casilla marcada sin evidencia no cuenta.
 
 - [ ] **Token fuera del almacenamiento.** El ID token se pide con `getIdToken()` en cada petición y no aparece en `localStorage`, `sessionStorage` ni en variables de módulo. Evidencia:
 - [ ] **Sin XSS.** Ningún `dangerouslySetInnerHTML`; un comentario con HTML se ve como texto. Evidencia:

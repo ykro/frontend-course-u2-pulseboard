@@ -1,11 +1,10 @@
-// Tus tests propios (15 puntos de la rúbrica).
+// Tus tests propios (al menos 2).
 //
-// Tus tests propios suman si pasan contra la solución de referencia y detectan
-// mutantes que la suite pública no detecta (errores sembrados en el
-// reto). Reescribir un test público no suma.
+// Un buen test pasa con el código correcto y falla si alguien mete un error
+// plausible del reto que los tests públicos no atrapan. Copiar un test
+// público no aporta.
 //
-// Escribe al menos 2 tests: detectar 2 o más grupos de esos errores da el
-// puntaje completo, 1 da la mitad. Usa las utilidades de tests/helpers.tsx
+// Escribe al menos 2 tests, cada uno para un error distinto. Usa las utilidades de tests/helpers.tsx
 // (renderApp, recordRequests, currentLocation) y el servidor de tests/setup.ts;
 // no uses la red ni archivos.
 import { describe, expect, it } from "vitest";
