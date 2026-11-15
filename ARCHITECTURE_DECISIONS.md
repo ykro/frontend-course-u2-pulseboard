@@ -44,7 +44,7 @@ Copia la regla que agregaste a `AGENTS.md`. Describe qué generó el asistente d
 
 ## 6. Declaración de uso de IA
 
-Completa con honestidad; declarar el uso no resta puntos, ocultarlo sí.
+Completa con honestidad; declarar el uso de IA está bien; ocultarlo no.
 
 - Herramientas usadas (o "ninguna"):
 - Partes del trabajo en las que las usaste:
